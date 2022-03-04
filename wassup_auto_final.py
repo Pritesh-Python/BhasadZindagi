@@ -19,20 +19,20 @@ import pandas
 import time
 import multiprocessing
 
-z = pandas.read_excel(r'/Users/priteshsrivastava/Downloads/Recipients_data_1.xlsx', sheet_name='Recipients')
-tic = time.time()
-driver = webdriver.Chrome(ChromeDriverManager().install())
-driver.get('https://web.whatsapp.com')
-input("Press ENTER after login into Whatsapp Web and your chats are visiable.")
-def msg_sent(count):
-    excel_data = pandas.read_excel(r'/Users/priteshsrivastava/Downloads/Recipients_data_1.xlsx', sheet_name='Recipients')
+
+
+
+excel_data = pandas.read_excel(r'/Users/priteshsrivastava/Downloads/Recipients_data_1.xlsx', sheet_name='Recipients')
     #print(excel_data['Contact'][0]+1)
     
     
-    
-    
+count = 0    
+driver = webdriver.Chrome(ChromeDriverManager().install())
+driver.get('https://web.whatsapp.com')
+input("Press ENTER after login into Whatsapp Web and your chats are visiable.")   
 #    driver = webdriver.Chrome(ChromeDriverManager().install())
 #    for column in excel_data['Contact'].tolist():
+for column in excel_data['Contact'].tolist():
     try:
         url = 'https://web.whatsapp.com/send?phone=' + str(excel_data['Contact'][count]) + '&text=' + 'Hi ' + str(excel_data['Name'][count]) + ' ji, ' + '\n' +  excel_data['Message'][0]
         print(url)
@@ -40,18 +40,18 @@ def msg_sent(count):
         # It tries 3 times to send a message in case if there any error occurred
         driver.get(url)
         try:
-#            driver.findElement(By.cssSelector("span[data-icon='clip']")).click();
-#            #add file to send by file path
-#            driver.findElement(By.cssSelector("input[type='file']")).sendKeys(r'Users/priteshsrivastava/sddefault.jpeg');
-#            #click to send
-#            driver.findElement(By.cssSelector("span[data-icon='send-light']")).click();
+    #            driver.findElement(By.cssSelector("span[data-icon='clip']")).click();
+    #            #add file to send by file path
+    #            driver.findElement(By.cssSelector("input[type='file']")).sendKeys(r'Users/priteshsrivastava/sddefault.jpeg');
+    #            #click to send
+    #            driver.findElement(By.cssSelector("span[data-icon='send-light']")).click();
             click_btn = WebDriverWait(driver, 35).until(
                 EC.element_to_be_clickable((By.CLASS_NAME, '_4sWnG')))
-#            attachment_box = driver.find_element_by_xpath('//div[@title = "Attach"]')
-#            attachment_box.click()
-#            image_box = driver.find_element_by_xpath(
-#                '//input[@accept="image/*,video/mp4,video/3gpp,video/quicktime"]')
-#            image_box.send_keys(r'Users/priteshsrivastava/sddefault.jpeg')
+    #            attachment_box = driver.find_element_by_xpath('//div[@title = "Attach"]')
+    #            attachment_box.click()
+    #            image_box = driver.find_element_by_xpath(
+    #                '//input[@accept="image/*,video/mp4,video/3gpp,video/quicktime"]')
+    #            image_box.send_keys(r'Users/priteshsrivastava/sddefault.jpeg')
             print(click_btn)
         except Exception as e:
             print(count)
@@ -68,9 +68,9 @@ def msg_sent(count):
         print(count)
         print('Failed to send message to ' + str(excel_data['Contact'][count] + str(e)))
                     
-    driver.quit()
-    print("The script executed successfully.")
-toc = time.time()
+driver.quit()
+print("The script executed successfully.")
+
 
 
 
@@ -84,9 +84,9 @@ toc = time.time()
 #        print('{} is a Perfect number'.format(n))
 #
 
-pool = multiprocessing.Pool()
-pool.map(msg_sent, range(0,len(z['Contact'].tolist())))
-pool.close()
+#pool = multiprocessing.Pool()
+#pool.map(msg_sent, range(0,len(z['Contact'].tolist())))
+#pool.close()
 
 
-print('Done in {:.4f} seconds'.format(toc-tic))
+#print('Done in {:.4f} seconds'.format(toc-tic))
